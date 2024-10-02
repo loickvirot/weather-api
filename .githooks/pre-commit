@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo "Running linters"
+docker-compose run --rm -T app npm run lint
+if [ $? -ne 0 ]; then
+	exit 1
+		echo "Lint failed..."
+fi
+
+echo "Running unit tests"
+docker-compose run --rm -T app npm run test
+if [ $? -ne 0 ]; then
+	exit 1
+	echo "Unit tests failed..."
+fi
+
+exit 0
