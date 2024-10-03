@@ -48,8 +48,6 @@ jobs:
     defaults:
       run:
         working-directory: ./app
-    permissions:
-      checks: write
     steps:
       - name: Setup repo
         uses: actions/checkout@v4
