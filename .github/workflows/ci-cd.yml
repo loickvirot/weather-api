@@ -43,6 +43,18 @@ jobs:
       - name: Run linter
         run: npm run lint
 
+  hello:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
+    permissions:
+      checks: write
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v4
+      - run: echo 'Hello world'
+
   build:
     runs-on: ubuntu-latest
     needs:
