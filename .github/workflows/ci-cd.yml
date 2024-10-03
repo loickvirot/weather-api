@@ -12,6 +12,9 @@ permissions:
 jobs:
   unit-test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
     defaults:
       run:
         working-directory: ./app
@@ -61,7 +64,7 @@ jobs:
       - name: Setup repo
         uses: actions/checkout@v4
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY_URL }}
           username: ${{ env.REGISTRY_USERNAME }}
