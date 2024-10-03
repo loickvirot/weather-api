@@ -11,10 +11,10 @@ describe('Weather controller', () => {
     expect(res.body).toEqual({
       status: 200,
       data: {
-        description: 'test',
-        temperature: 10,
-        humidity: 0.1,
-        windSpeed: 20,
+        description: 'Broken clouds',
+        temperature: 13.85,
+        humidity: 75,
+        windSpeed: 5.85,
       },
     })
   })

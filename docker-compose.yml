@@ -6,6 +6,8 @@ services:
     command: npm run dev
     ports:
       - "3000:3000"
+    environment:
+      - WEATHERBIT_APIKEY=${WEATHERBIT_APIKEY}
 
 volumes:
   database:
