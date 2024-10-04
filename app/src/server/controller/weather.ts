@@ -1,7 +1,6 @@
 import { Request, Response, Router } from 'express'
 import { json } from '../../common/controller-utils/controller-utils'
-import { getWeather } from '../../weather/app/query/get-weather'
-import { mockWeatherReposiory } from '../../weather/infra/weather-api/mock'
+import { getCurrentWeather } from '../../weather/module'
 
 export const router = Router()
 
@@ -14,5 +13,5 @@ router.get('/current', async (req: Request, res: Response) => {
     return
   }
 
-  json(res, await getWeather('toulouse', mockWeatherReposiory))
+  json(res, await getCurrentWeather('toulouse'))
 })

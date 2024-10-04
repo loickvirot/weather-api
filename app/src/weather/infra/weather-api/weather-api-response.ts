@@ -18,7 +18,7 @@ export interface WeatherAPIResponseData {
   wind_dir: number | undefined
   wind_cdir: string | undefined
   wind_cdir_full: string | undefined
-  wind_speed: number | undefined
+  wind_spd: number | undefined
   gust: number | null | undefined
   temp: number | undefined
   app_temp: number | undefined

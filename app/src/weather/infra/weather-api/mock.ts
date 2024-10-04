@@ -1,9 +1,7 @@
 import { Weather } from '../../domain/entity/weather'
 import { WeatherRepository } from '../../domain/repository/weather-repository'
-import {
-  WeatherAPIResponse,
-  WeatherAPIResponseData,
-} from './weather-api-response'
+import { WeatherAPIResponse } from './weather-api-response'
+import { weatherAPIResponseToWeather } from './weather-factory'
 
 export const mockWeatherReposiory: WeatherRepository = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -35,7 +33,7 @@ const getCurrentWeatherAPIMock = (): WeatherAPIResponse => ({
       wind_dir: 125,
       wind_cdir: 'ENE',
       wind_cdir_full: 'East-North-East',
-      wind_speed: 5.85,
+      wind_spd: 5.85,
       gust: 9,
       temp: 13.85,
       app_temp: 14.85,
@@ -66,14 +64,3 @@ const getCurrentWeatherAPIMock = (): WeatherAPIResponse => ({
     },
   ],
 })
-
-export const weatherAPIResponseToWeather = (
-  data: WeatherAPIResponseData,
-): Weather => {
-  return {
-    description: data.weather?.description,
-    temperature: data.temp,
-    humidity: data.rh,
-    windSpeed: data.wind_speed,
-  }
-}
