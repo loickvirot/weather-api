@@ -1,7 +1,7 @@
 export interface Forecast {
   evolution: EvolutionEnum
   temperature: EvolutionEnum
-  pressure: PressureEnum.HighDecrease
+  pressure: EvolutionEnum | ExtendedEvolutionEnum
   windForceAverage: 3
 }
 
@@ -11,10 +11,7 @@ export enum EvolutionEnum {
   Stable = 'stable',
 }
 
-export enum PressureEnum {
+export enum ExtendedEvolutionEnum {
   HighIncrease = 'high_increase',
-  Increase = 'increase',
   HighDecrease = 'high_decrease',
-  Decrease = 'decrease',
-  Stable = 'stable',
 }

@@ -1,12 +1,12 @@
 import { describe, expect, test } from '@jest/globals'
-import { EvolutionEnum, Forecast, PressureEnum } from './forecast'
+import { EvolutionEnum, ExtendedEvolutionEnum, Forecast } from './forecast'
 
 describe('Forecast entity', () => {
   test('Entity should have properties', () => {
     const forecast: Forecast = {
       evolution: EvolutionEnum.Increase,
       temperature: EvolutionEnum.Decrease,
-      pressure: PressureEnum.HighDecrease,
+      pressure: ExtendedEvolutionEnum.HighDecrease,
       windForceAverage: 3,
     }
     expect(forecast).toHaveProperty('evolution')
@@ -21,11 +21,8 @@ describe('Forecast entity', () => {
     expect(EvolutionEnum.Stable).toEqual('stable')
   })
 
-  test('PressureEnum should have values', () => {
-    expect(PressureEnum.HighIncrease).toEqual('high_increase')
-    expect(PressureEnum.Increase).toEqual('increase')
-    expect(PressureEnum.HighDecrease).toEqual('high_decrease')
-    expect(PressureEnum.Decrease).toEqual('decrease')
-    expect(PressureEnum.Stable).toEqual('stable')
+  test('ExtendedEvolutionEnum should have values', () => {
+    expect(ExtendedEvolutionEnum.HighIncrease).toEqual('high_increase')
+    expect(ExtendedEvolutionEnum.HighDecrease).toEqual('high_decrease')
   })
 })
