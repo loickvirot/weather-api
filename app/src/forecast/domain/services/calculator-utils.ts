@@ -1,4 +1,4 @@
-import { EvolutionEnum } from '../entity/forecast'
+import { EvolutionEnum, ExtendedEvolutionEnum } from '../entity/forecast'
 
 export const leastSquares = (data: number[]): number => {
   const x = data.map((_, index) => index)
@@ -21,12 +21,27 @@ export const calculateEvolution = (
   slope: number,
   stableTolerence: number = 0.2,
 ): EvolutionEnum => {
-  if (slope > stableTolerence) {
-    return EvolutionEnum.Increase
+  switch (true) {
+    case slope < stableTolerence * -1:
+      return EvolutionEnum.Decrease
+    case slope <= stableTolerence:
+      return EvolutionEnum.Stable
+    default:
+      return EvolutionEnum.Increase
   }
+}
 
-  if (slope < stableTolerence * -1) {
-    return EvolutionEnum.Decrease
+export const calculateEvolutionExtended = (
+  slope: number,
+  stableTolerence: number = 0.2,
+  normalTolerence: number = 2,
+): EvolutionEnum | ExtendedEvolutionEnum => {
+  switch (true) {
+    case slope < normalTolerence * -1:
+      return ExtendedEvolutionEnum.HighDecrease
+    case slope > normalTolerence:
+      return ExtendedEvolutionEnum.HighIncrease
+    default:
+      return calculateEvolution(slope, stableTolerence)
   }
-  return EvolutionEnum.Stable
 }
