@@ -1,10 +1,10 @@
 import { Request, Response, Router } from 'express'
 import { json } from '../../common/controller-utils/controller-utils'
-import { getCurrentWeather } from '../../weather/module'
+import { getForecastForCity } from '../../forecast/module'
 
 export const router = Router()
 
-router.get('/current', async (req: Request, res: Response) => {
+router.get('/forecast', async (req: Request, res: Response) => {
   const { location } = req.query
 
   if (!location) {
@@ -13,5 +13,5 @@ router.get('/current', async (req: Request, res: Response) => {
     return
   }
 
-  json(res, await getCurrentWeather(location as string))
+  json(res, await getForecastForCity(location as string))
 })
