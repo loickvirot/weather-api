@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx jest",
-    "test:ci": "npx jest --ci --reporters=default --reporters=jest-junit",
+    "test:ci": "npx jest --ci --reporters=default --reporters=jest-junit --coverage",
     "lint:prettier": "npx prettier src --check",
     "lint:prettier:fix": "npx prettier src --write",
     "lint:eslint": "npx eslint src",
