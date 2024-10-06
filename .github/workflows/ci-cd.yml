@@ -37,7 +37,7 @@ jobs:
       - name: Code Coverage Summary Report
         uses: saschanowak/CloverCodeCoverageSummary@1.0.1
         with:
-          filename: app/coverage/clover.xml
+          filename: coverage/clover.xml
 
       - name: "Add Code Coverage to Job Summary"
         run: |
