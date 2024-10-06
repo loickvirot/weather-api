@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals'
-import { windForceCalculator } from './wind-force-calculator'
+import { calculateWindForce } from './wind-force-calculator'
 
 describe('windForceCalculator', () => {
   ;[
@@ -102,7 +102,11 @@ describe('windForceCalculator', () => {
     },
   ].forEach(({ data, expected, title }) => {
     test(`windForceCalculator should return ${expected} when average wind speeds average is ${title}`, () => {
-      expect(windForceCalculator(data)).toBe(expected)
+      expect(calculateWindForce(data)).toBe(expected)
     })
+  })
+
+  test(`windForceCalculator should return 0 when average wind speeds array is empty`, () => {
+    expect(calculateWindForce([])).toBe(0)
   })
 })

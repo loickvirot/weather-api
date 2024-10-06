@@ -17,8 +17,11 @@ describe('calculatePressureEvolution', () => {
     },
   ].forEach(({ data, expected }) =>
     test(`calculatePressureEvolution should return ${expected}`, () => {
-      const res = calculatePressureEvolution(data)
-      expect(res).toBe(expected)
+      expect(calculatePressureEvolution(data)).toBe(expected)
     }),
   )
+
+  test(`calculatePressureEvolution should return stable when there is no values`, () => {
+    expect(calculatePressureEvolution([])).toBe(EvolutionEnum.Stable)
+  })
 })

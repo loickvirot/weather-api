@@ -2,7 +2,7 @@ export interface Forecast {
   evolution: EvolutionEnum
   temperature: EvolutionEnum
   pressure: EvolutionEnum | ExtendedEvolutionEnum
-  windForceAverage: 3
+  windForceAverage: number
 }
 
 export enum EvolutionEnum {

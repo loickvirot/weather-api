@@ -74,4 +74,14 @@ describe('GeneralEvolutionCalculator service', () => {
       expect(calculateGeneralEvolution(data)).toBe(testData.expected)
     })
   })
+
+  test(`calculateGeneralEvolution should return Stable with undefined values`, () => {
+    const data: ForecastData = {
+      temperatures: undefined,
+      pressures: undefined,
+      windSpeeds: undefined,
+    }
+
+    expect(calculateGeneralEvolution(data)).toBe(EvolutionEnum.Stable)
+  })
 })

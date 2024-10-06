@@ -1,4 +1,8 @@
-export const windForceCalculator = (data: number[]): number => {
+export const calculateWindForce = (data: number[]): number => {
+  if (data.length === 0) {
+    return 0
+  }
+
   const average =
     data.reduce((previous, current) => previous + current) / data.length
 

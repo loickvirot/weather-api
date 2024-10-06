@@ -8,6 +8,7 @@ import { EvolutionEnum, ExtendedEvolutionEnum } from '../entity/forecast'
 
 describe('leastSquares function', () => {
   test('leastSquares function should return slope value', () => {
+    expect(leastSquares([])).toBe(0)
     expect(leastSquares([10, 10, 10, 10, 10])).toBe(0)
     expect(leastSquares([10, 11, 12, 13, 14])).toBe(1)
     expect(leastSquares([10, 11, 12, 13, 13])).toBe(0.8)

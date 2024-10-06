@@ -13,6 +13,10 @@ export const calculateGeneralEvolution = (
     (v): v is number[] => v != undefined && !!v,
   )
 
+  if (dataToAnalyse.length === 0) {
+    return EvolutionEnum.Stable
+  }
+
   const slopes = dataToAnalyse.map((v) => leastSquares(v))
   const average =
     slopes.reduce((prev: number, current: number) => prev + current) /

@@ -11,8 +11,11 @@ describe('calculateTemperatureEvolution', () => {
     { data: [10, 11, 12, 14, 5], expected: EvolutionEnum.Decrease },
   ].forEach(({ data, expected }) =>
     test(`calculateTemperatureEvolution should return ${expected}`, () => {
-      const res = calculateTemperatureEvolution(data)
-      expect(res).toBe(expected)
+      expect(calculateTemperatureEvolution(data)).toBe(expected)
     }),
   )
+
+  test(`calculateTemperatureEvolution should return stable when array is empty`, () => {
+    expect(calculateTemperatureEvolution([])).toBe(EvolutionEnum.Stable)
+  })
 })

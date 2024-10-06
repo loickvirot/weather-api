@@ -1,6 +1,10 @@
 import { EvolutionEnum, ExtendedEvolutionEnum } from '../entity/forecast'
 
 export const leastSquares = (data: number[]): number => {
+  if (data.length === 0) {
+    return 0
+  }
+
   const x = data.map((_, index) => index)
 
   const averageX = x.reduce((acc, val) => acc + val, 0) / x.length
