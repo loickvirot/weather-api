@@ -34,18 +34,6 @@ jobs:
         with:
           report_paths: "**/junit.xml"
 
-      - name: Code Coverage Summary Report
-        uses: saschanowak/CloverCodeCoverageSummary@1.0.1
-        with:
-          filename: coverage/clover.xml
-
-      - name: "Add Code Coverage to Job Summary"
-        run: |
-          ls -la coverage
-          ls -la
-          cat code-coverage-summary.md >> $GITHUB_STEP_SUMMARY
-          cat code-coverage-details.md >> $GITHUB_STEP_SUMMARY
-
   lint:
     runs-on: ubuntu-latest
     defaults:
