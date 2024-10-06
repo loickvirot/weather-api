@@ -1,4 +1,6 @@
-# NodeJS Boilerplate
+# Weather API
+
+[![CI/CD](https://github.com/loickvirot/weather-api/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/loickvirot/weather-api/actions/workflows/ci-cd.yml)
 
 A template to create APIs with NodeJS.
 
