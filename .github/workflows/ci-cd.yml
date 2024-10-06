@@ -34,12 +34,15 @@ jobs:
         with:
           report_paths: "**/junit.xml"
 
-      - name: Code Coverage Report
-        uses: irongut/CodeCoverageSummary@v1.3.0
+      - name: Code Coverage Summary Report
+        uses: saschanowak/CloverCodeCoverageSummary@1.0.1
         with:
           filename: app/coverage/clover.xml
-          badge: true
-          format: markdown
+
+      - name: "Add Code Coverage to Job Summary"
+        run: |
+          cat code-coverage-summary.md >> $GITHUB_STEP_SUMMARY
+          cat code-coverage-details.md >> $GITHUB_STEP_SUMMARY
 
   lint:
     runs-on: ubuntu-latest
