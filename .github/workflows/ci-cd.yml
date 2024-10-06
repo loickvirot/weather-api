@@ -37,7 +37,7 @@ jobs:
       - name: Code Coverage Report
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
-          filename: app/coverage/**/clover.xml
+          filename: app/coverage/clover.xml
           badge: true
           format: markdown
 
