@@ -14,7 +14,7 @@ describe('Weather controller', () => {
         description: 'Broken clouds',
         temperature: 13.85,
         humidity: 75,
-        windSpeed: 5.85,
+        wind_speed: 5.85,
       },
     })
   })

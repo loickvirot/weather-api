@@ -14,7 +14,7 @@ describe('Forecast controller', () => {
         evolution: 'increase',
         pressure: 'increase',
         temperature: 'increase',
-        windForceAverage: 3,
+        wind_force_average: 3,
       },
     })
   })

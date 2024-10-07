@@ -1,8 +1,35 @@
 import { Request, Response, Router } from 'express'
-import { json } from '../../common/controller-utils/controller-utils'
+import {
+  createJsonResponse,
+  JsonResponse,
+} from '../../common/controller-utils/controller-utils'
 import { getCurrentWeather } from '../../weather/module'
+import { Weather } from '../../weather/domain/entity/weather'
 
 export const router = Router()
+
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    WeatherDTO:
+ *      type: object
+ *      properties:
+ *        description:
+ *          type: string
+ *        temperature:
+ *          type: number
+ *        humidity:
+ *          type: integer
+ *        wind_speed:
+ *          type: number
+ */
+export interface WeatherDTO {
+  description: string | undefined
+  temperature: number | undefined
+  humidity: number | undefined
+  wind_speed: number | undefined
+}
 
 /**
  * @openapi
@@ -20,16 +47,7 @@ export const router = Router()
  *                status:
  *                  type: integer
  *                data:
- *                  type: object
- *                  properties:
- *                    description:
- *                      type: string
- *                    temperature:
- *                      type: number
- *                    humidity:
- *                      type: integer
- *                    windSpeed:
- *                      type: number
+ *                  $ref: "#/components/schemas/WeatherDTO"
  *
  *      400:
  *        description: No location
@@ -42,14 +60,27 @@ export const router = Router()
  *          type: string
  *
  */
-router.get('/current', async (req: Request, res: Response) => {
-  const { location } = req.query
+router.get(
+  '/current',
+  async (req: Request, res: Response<JsonResponse<WeatherDTO>>) => {
+    const { location } = req.query
 
-  if (!location) {
-    res.status(400)
-    res.send()
-    return
-  }
+    if (!location) {
+      res.status(400)
+      res.send()
+      return
+    }
 
-  json(res, await getCurrentWeather(location as string))
+    const data = await getCurrentWeather(location as string)
+
+    res.status(200)
+    res.json(createJsonResponse<WeatherDTO>(weatherToDTO(data)))
+  },
+)
+
+const weatherToDTO = (weather: Weather): WeatherDTO => ({
+  description: weather.description,
+  temperature: weather.temperature,
+  humidity: weather.humidity,
+  wind_speed: weather.windSpeed,
 })

@@ -1,34 +1,24 @@
 import { test, expect, describe } from '@jest/globals'
-import { createResponse } from 'node-mocks-http'
-import { json } from './controller-utils'
+import { createJsonResponse } from './controller-utils'
 
 describe('Controller Utils', () => {
-  test('Should return 200 status code by default', () => {
-    const res = createResponse()
+  test('createJsonbResponse should return json response with data', () => {
+    interface Test {
+      test: string
+      value: number
+    }
 
-    json(res, { test: 'test' })
+    const expectedData = {
+      test: 'hello world',
+      value: 1,
+    }
 
-    expect(res._getJSONData()).toEqual({
-      status: 200,
-      data: {
-        test: 'test',
-      },
-    })
+    const response = createJsonResponse<Test>(expectedData)
 
-    expect(res._getStatusCode()).toBe(200)
-  })
+    expect(response).toHaveProperty('status')
+    expect(response.status).toBe(200)
 
-  test('Should return other status code with parameters', () => {
-    const res = createResponse()
-
-    json(res, { test: 'test' }, 400)
-
-    expect(res._getJSONData()).toEqual({
-      status: 400,
-      data: {
-        test: 'test',
-      },
-    })
-    expect(res._getStatusCode()).toBe(400)
+    expect(response).toHaveProperty('data')
+    expect(response.data).toBe(expectedData)
   })
 })

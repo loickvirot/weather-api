@@ -1,18 +1,38 @@
 import { Request, Response, Router } from 'express'
-import { json } from '../../common/controller-utils/controller-utils'
+import {
+  createJsonResponse,
+  JsonResponse,
+} from '../../common/controller-utils/controller-utils'
 import { getForecastForCity } from '../../forecast/module'
+import { Forecast } from '../../forecast/domain/entity/forecast'
 
 export const router = Router()
 
 /**
  * @openapi
  * components:
- *  schema:
- *    Forecast:
+ *  schemas:
+ *    ForecastDTO:
  *      type: object
  *      properties:
- *        status: integer
- *
+ *        evolution:
+ *          type: string
+ *        temperature:
+ *          type: string
+ *        pressure:
+ *          type: string
+ *        wind_force_average:
+ *          type: integer
+ */
+interface ForecastDTO {
+  evolution: string
+  temperature: string
+  pressure: string
+  wind_force_average: number
+}
+
+/**
+ * @openapi
  * /weather/forecast:
  *  get:
  *    description: Returns weather trend analysis based on next 7 days forecast.
@@ -25,19 +45,9 @@ export const router = Router()
  *              type: object
  *              properties:
  *                status:
- *                  type: integer
+ *                  type: number
  *                data:
- *                  type: object
- *                  properties:
- *                    evolution:
- *                      type: string
- *                    temperature:
- *                      type: string
- *                    pressure:
- *                      type: string
- *                    windForceAverage:
- *                      type: integer
- *
+ *                  $ref: "#/components/schemas/ForecastDTO"
  *      400:
  *        description: No location
  *    parameters:
@@ -49,14 +59,27 @@ export const router = Router()
  *          type: string
  *
  */
-router.get('/forecast', async (req: Request, res: Response) => {
-  const { location } = req.query
+router.get(
+  '/forecast',
+  async (req: Request, res: Response<JsonResponse<ForecastDTO>>) => {
+    const { location } = req.query
 
-  if (!location) {
-    res.status(400)
-    res.send()
-    return
-  }
+    if (!location) {
+      res.status(400)
+      res.send()
+      return
+    }
 
-  json(res, await getForecastForCity(location as string))
+    const data = await getForecastForCity(location as string)
+
+    res.status(200)
+    res.json(createJsonResponse(forecastToDTO(data)))
+  },
+)
+
+const forecastToDTO = (forecast: Forecast): ForecastDTO => ({
+  evolution: forecast.evolution,
+  temperature: forecast.temperature,
+  pressure: forecast.pressure,
+  wind_force_average: forecast.windForceAverage,
 })

@@ -1,13 +1,12 @@
-import { type Response } from 'express'
-
-export const json = (
-  res: Response,
-  data: unknown,
+export const createJsonResponse = <T>(
+  data: T,
   status: number = 200,
-): void => {
-  res.status(status)
-  res.json({
-    status,
-    data,
-  })
+): JsonResponse<T> => ({
+  status,
+  data,
+})
+
+export interface JsonResponse<T> {
+  status: number
+  data: T
 }
