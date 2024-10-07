@@ -70,7 +70,7 @@ jobs:
 
       - name: Configure GCP_REGISTRY_PASS variable
         id: gcp-config
-        run: echo GCP_REGISTRY_PASS=${{ secrets.GCP_KEY }} >> $GITHUB_OUTPUT
+        run: echo GCP_REGISTRY_PASS="${{ secrets.GCP_KEY }}"" >> $GITHUB_OUTPUT
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
