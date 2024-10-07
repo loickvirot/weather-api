@@ -58,9 +58,9 @@ jobs:
       contents: read
       packages: write
     env:
-      REGISTRY_URL: europe-west1-docker.pkg.dev/weather-api-437916/weather-api
+      REGISTRY_URL: europe-west1-docker.pkg.dev
       REGISTRY_USERNAME: _json_key_base64
-      IMAGE: ${{ github.repository }}
+      IMAGE: weather-api-437916/weather-api/weather-api
     defaults:
       run:
         working-directory: ./app
