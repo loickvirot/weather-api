@@ -70,7 +70,9 @@ jobs:
 
       - name: Configure GCP_REGISTRY_PASS variable
         id: gcp-config
-        run: echo "GCP_REGISTRY_PASS=${{ secrets.GCP_KEY }}" >> $GITHUB_OUTPUT
+        run: |
+          GCP_REGISTRY_PASS=$(echo '${{ secrets.GCP_KEY }}' | base64 -w 0)
+          echo "GCP_REGISTRY_PASS=$GCP_REGISTRY_PASS" >> $GITHUB_OUTPUT
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -84,3 +86,23 @@ jobs:
 
       - name: Push to registry
         run: docker push ${{ env.REGISTRY_URL }}/${{ env.IMAGE }}:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    permissions:
+      contents: "read"
+      id-token: "write"
+    steps:
+      - uses: "actions/checkout@v4"
+
+      - uses: "google-github-actions/auth@v2"
+        with:
+          credentials_json: ${{ secrets.GCP_KEY }}
+
+      - id: "deploy"
+        uses: "google-github-actions/deploy-cloudrun@v2"
+        with:
+          service: "weather-api"
+          image: "europe-west1-docker.pkg.dev/weather-api-437916/weather-api/weather-api"
