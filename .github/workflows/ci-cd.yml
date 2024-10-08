@@ -105,4 +105,4 @@ jobs:
         uses: "google-github-actions/deploy-cloudrun@v2"
         with:
           service: "weather-api"
-          image: "europe-west1-docker.pkg.dev/weather-api-437916/weather-api/weather-api"
+          image: "europe-west1-docker.pkg.dev/weather-api-437916/weather-api/weather-api:latest"
