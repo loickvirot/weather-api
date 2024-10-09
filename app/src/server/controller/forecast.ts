@@ -4,6 +4,7 @@ import { forecastModule } from '../../forecast/module'
 import { Forecast } from '../../forecast/domain/entity/forecast'
 
 export const router = Router()
+const forecastMod = forecastModule()
 
 /**
  * @openapi
@@ -67,7 +68,7 @@ router.get(
       return
     }
 
-    const data = await forecastModule.getForecastForCity(location as string)
+    const data = await forecastMod.getForecastForCity(location as string)
 
     res.status(200)
     res.json(createJsonResponse(forecastToDTO(data)))

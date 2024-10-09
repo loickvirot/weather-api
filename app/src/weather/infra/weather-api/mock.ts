@@ -3,7 +3,7 @@ import { WeatherRepository } from '../../domain/repository/weather-repository'
 import { WeatherAPIResponse } from './weather-api-response'
 import { weatherAPIResponseToWeather } from './weather-factory'
 
-export const mockWeatherReposiory: WeatherRepository = {
+export const mockWeatherRepository: WeatherRepository = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getCurrentWeather: (city: string): Promise<Weather> => {
     return new Promise(

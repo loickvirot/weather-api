@@ -1,6 +1,7 @@
 import { ForecastData } from '../../domain/entity/forecast-data'
 import { ForecastDataRepository } from '../../domain/repository/forecast-data-repository'
 import { ForecastAPIResponse } from './forecast-api-response'
+import { forecastAPIResponseToForecastData } from './forecast-data-factory'
 
 export const weatherbit: ForecastDataRepository = {
   getForecastData: async (city: string): Promise<ForecastData> => {
@@ -10,11 +11,7 @@ export const weatherbit: ForecastDataRepository = {
     }
     const json: ForecastAPIResponse = await res.json()
 
-    return {
-      temperatures: json.data.map((v) => v.temp as number),
-      pressures: json.data.map((v) => v.pres as number),
-      windSpeeds: json.data.map((v) => v.wind_spd as number),
-    }
+    return forecastAPIResponseToForecastData(json)
   },
 }
 

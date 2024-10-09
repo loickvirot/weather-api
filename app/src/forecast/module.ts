@@ -7,13 +7,18 @@ export interface ForecastModule {
   getForecastForCity: (city: string) => Promise<Forecast>
 }
 
-export const initialize = (): ForecastModule => {
-  const repository =
-    process.env.APP_ENV === 'production' ? weatherbit : forecastAPIMock
+export interface ForecastModuleOptions {
+  mockData: boolean
+}
+
+export const forecastModule = (
+  options: ForecastModuleOptions = {
+    mockData: process.env.APP_ENV !== 'production',
+  },
+): ForecastModule => {
+  const repository = options.mockData ? forecastAPIMock : weatherbit
 
   return {
     getForecastForCity: (city: string) => getForecast(repository, city),
   }
 }
-
-export const forecastModule = initialize()
