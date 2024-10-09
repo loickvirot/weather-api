@@ -87,7 +87,8 @@ jobs:
       - name: Push to registry
         run: docker push ${{ env.REGISTRY_URL }}/${{ env.IMAGE }}:latest
 
-  deploy:
+  deploy-staging:
+    name: Deploy - Staging
     runs-on: ubuntu-latest
     needs:
       - build
@@ -113,11 +114,14 @@ jobs:
           secrets: |-
             WEATHERBIT_APIKEY=WEATHERBIT_APIKEY:latest
 
-  api-tests:
-    name: API tests
+  api-tests-staging:
+    name: API tests - Staging
     runs-on: ubuntu-latest
     needs:
-      - deploy
+      - deploy-staging
+    env:
+      POSTMAN_COLLECTION_ID: 4680034-a31d833e-3e14-4aee-b19d-8d483ab4e476
+      POSTMAN_ENV_ID: 4680034-d5789bbe-e6d5-48d4-8fb6-d38db9f91e9c
     steps:
       - uses: actions/checkout@v4
       - name: Install Postman CLI
@@ -127,4 +131,50 @@ jobs:
         run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
       - name: Run API tests
         run: |
-          postman collection run "4680034-a31d833e-3e14-4aee-b19d-8d483ab4e476" -e "4680034-d5789bbe-e6d5-48d4-8fb6-d38db9f91e9c"
+          postman collection run "${{ env.POSTMAN_COLLECTION_ID }}" -e "${{ env.POSTMAN_ENV_ID }}"
+
+  deploy-prod:
+    name: Deploy - Prod
+    runs-on: ubuntu-latest
+    needs:
+      - api-tests-staging
+    permissions:
+      contents: "read"
+      id-token: "write"
+    steps:
+      - uses: "actions/checkout@v4"
+
+      - uses: "google-github-actions/auth@v2"
+        with:
+          credentials_json: ${{ secrets.GCP_KEY }}
+
+      - id: "deploy"
+        uses: "google-github-actions/deploy-cloudrun@v2"
+        with:
+          service: weather-api-staging
+          image: europe-west1-docker.pkg.dev/weather-api-437916/weather-api/weather-api:latest
+          region: europe-west1
+          env_vars: |-
+            APP_ENV=production
+            BASE_URL=https://weather-api-951054010171.europe-west1.run.app
+          secrets: |-
+            WEATHERBIT_APIKEY=WEATHERBIT_APIKEY:latest
+
+  api-tests-prod:
+    name: API tests - Prod
+    runs-on: ubuntu-latest
+    needs:
+      - deploy-prod
+    env:
+      POSTMAN_COLLECTION_ID: 4680034-a31d833e-3e14-4aee-b19d-8d483ab4e476
+      POSTMAN_ENV_ID: 4680034-db8c7400-c06d-4b4d-a50c-4c7ba85096a9
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Postman CLI
+        run: |
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+      - name: Login to Postman CLI
+        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+      - name: Run API tests
+        run: |
+          postman collection run "${{ env.POSTMAN_COLLECTION_ID }}" -e "${{ env.POSTMAN_ENV_ID }}"
