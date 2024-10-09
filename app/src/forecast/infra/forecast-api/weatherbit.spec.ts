@@ -9,6 +9,7 @@ import {
 import { fetchForecastData, getUrl, weatherbit } from './weatherbit'
 import { ForecastData } from '../../domain/entity/forecast-data'
 import { mockedJson } from './mock'
+import config from '../../../config'
 
 describe('Weatherbit repository with mock OK', () => {
   let fetchMock: unknown
@@ -42,8 +43,8 @@ describe('Weatherbit repository with mock OK', () => {
   const cities = ['toulouse', 'paris']
   cities.forEach((city: string) => {
     test(`getUrl should return url with location: ${city}`, () => {
-      expect(getUrl(city)).toBe(
-        `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&days=7&key=${process.env.WEATHERBIT_APIKEY}`,
+      expect(getUrl(city)).toEqual(
+        `${config.weatherbit.baseUrl}/forecast/daily?city=${city}&days=7&key=${config.weatherbit.apiKey}`,
       )
     })
   })

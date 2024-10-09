@@ -1,3 +1,4 @@
+import config from '../../../config'
 import { ForecastData } from '../../domain/entity/forecast-data'
 import { ForecastDataRepository } from '../../domain/repository/forecast-data-repository'
 import { ForecastAPIResponse } from './forecast-api-response'
@@ -19,4 +20,4 @@ export const fetchForecastData = (city: string): Promise<Response> =>
   fetch(getUrl(city))
 
 export const getUrl = (city: string): string =>
-  `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&days=7&key=${process.env.WEATHERBIT_APIKEY}`
+  `${config.weatherbit.baseUrl}/forecast/daily?city=${city}&days=7&key=${config.weatherbit.apiKey}`

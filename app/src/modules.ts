@@ -1,11 +1,11 @@
-import appConfig from './app.config'
+import config from './config'
 import { forecastModule } from './forecast/module'
 import { weatherModule } from './weather/module'
 
 export const weather = weatherModule({
-  mockData: appConfig.mockData,
+  mockData: config.mockData,
 })
 
 export const forecast = forecastModule({
-  mockData: appConfig.mockData,
+  mockData: config.mockData,
 })
