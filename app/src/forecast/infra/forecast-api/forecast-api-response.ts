@@ -9,10 +9,10 @@ export interface ForecastAPIResponse {
 }
 
 export interface ForecastDataResponse {
-  ts: number | undefined
+  ts: string | undefined
   timestamp_local: string | undefined
   timestamp_utc: string | undefined
-  datetile: string | undefined
+  datetime: string | undefined
   snow: number | undefined
   snow_depth: number | null | undefined
   precip: number | undefined
@@ -28,7 +28,7 @@ export interface ForecastDataResponse {
   slp: number | undefined
   pres: number | undefined
   uv: number | undefined
-  max_dhi: number | null | undefined
+  max_dhi: string | null | undefined
   vis: number | undefined
   pop: number | undefined
   moon_phase: number | undefined

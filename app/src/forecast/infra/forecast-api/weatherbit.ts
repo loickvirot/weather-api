@@ -3,10 +3,8 @@ import { ForecastDataRepository } from '../../domain/repository/forecast-data-re
 import { ForecastAPIResponse } from './forecast-api-response'
 
 export const weatherbit: ForecastDataRepository = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getForecastData: async (city: string): Promise<ForecastData> => {
-    const url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&days=7&key=${process.env.WEATHERBIT_APIKEY}`
-    const res = await fetch(url)
+    const res = await fetchForecastData(city)
     if (!res.ok) {
       throw new Error(`Cannot retrieve forecast. Status: ${res.status}`)
     }
@@ -19,3 +17,9 @@ export const weatherbit: ForecastDataRepository = {
     }
   },
 }
+
+export const fetchForecastData = (city: string): Promise<Response> =>
+  fetch(getUrl(city))
+
+export const getUrl = (city: string): string =>
+  `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&days=7&key=${process.env.WEATHERBIT_APIKEY}`

@@ -3,7 +3,7 @@ import {
   createJsonResponse,
   JsonResponse,
 } from '../../common/controller-utils/controller-utils'
-import { getForecastForCity } from '../../forecast/module'
+import { forecastModule } from '../../forecast/module'
 import { Forecast } from '../../forecast/domain/entity/forecast'
 
 export const router = Router()
@@ -70,7 +70,7 @@ router.get(
       return
     }
 
-    const data = await getForecastForCity(location as string)
+    const data = await forecastModule.getForecastForCity(location as string)
 
     res.status(200)
     res.json(createJsonResponse(forecastToDTO(data)))
