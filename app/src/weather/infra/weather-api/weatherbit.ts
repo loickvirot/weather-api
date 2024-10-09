@@ -10,7 +10,12 @@ export const weatherbit: WeatherRepository = {
     if (!res.ok) {
       throw new Error(`Cannot retrieve current weather. Status: ${res.status}`)
     }
+
     const json: WeatherAPIResponse = await res.json()
+
+    if (json.data.length == 0) {
+      throw new Error(`No data returned from API`)
+    }
 
     return weatherAPIResponseToWeather(json.data[0])
   },
