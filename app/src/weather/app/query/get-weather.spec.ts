@@ -15,10 +15,7 @@ describe('getWeather function', () => {
     const weatherRepository: WeatherRepository = {
       getCurrentWeather: jest.fn(
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        (city: string): Promise<Weather> =>
-          new Promise((resolve) => {
-            resolve(expected)
-          }),
+        (city: string): Promise<Weather> => Promise.resolve(expected),
       ),
     }
 

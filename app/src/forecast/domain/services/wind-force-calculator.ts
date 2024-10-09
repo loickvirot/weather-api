@@ -4,7 +4,7 @@ export const calculateWindForce = (data: number[]): number => {
   }
 
   const average =
-    data.reduce((previous, current) => previous + current) / data.length
+    data.reduce((previous, current) => previous + current, 0) / data.length
 
   switch (true) {
     case average < 1:

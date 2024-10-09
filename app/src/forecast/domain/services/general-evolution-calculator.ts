@@ -19,7 +19,7 @@ export const calculateGeneralEvolution = (
 
   const slopes = dataToAnalyse.map((v) => leastSquares(v))
   const average =
-    slopes.reduce((prev: number, current: number) => prev + current) /
+    slopes.reduce((prev: number, current: number) => prev + current, 0) /
     slopes.length
 
   return calculateEvolution(average)

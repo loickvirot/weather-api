@@ -5,12 +5,8 @@ import { weatherAPIResponseToWeather } from './weather-factory'
 
 export const mockWeatherRepository: WeatherRepository = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getCurrentWeather: (city: string): Promise<Weather> => {
-    return new Promise(
-      (resolve: (value: Weather | PromiseLike<Weather>) => void) =>
-        resolve(weatherAPIResponseToWeather(mockedApiResponse.data[0])),
-    )
-  },
+  getCurrentWeather: (city: string): Promise<Weather> =>
+    Promise.resolve(weatherAPIResponseToWeather(mockedApiResponse.data[0])),
 }
 
 export const mockedApiResponse: WeatherAPIResponse = {

@@ -5,14 +5,11 @@ RUN npm i -g npm@10.8.1
 
 # Copy files
 WORKDIR /app
-ADD . .
+COPY . .
 
 # Install dependencies
-RUN npm install
-
-# Build Typescript
-RUN npm run build
+RUN npm install && npm run build
 
 EXPOSE 3000
 
-CMD node dist/main.js
+CMD ["node", "dist/main.js"]
