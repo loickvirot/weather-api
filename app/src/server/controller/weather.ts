@@ -1,8 +1,5 @@
 import { Request, Response, Router } from 'express'
-import {
-  createJsonResponse,
-  JsonResponse,
-} from '../../common/controller-utils/controller-utils'
+import { createJsonResponse, JsonResponse } from './controller-utils'
 import { getCurrentWeather } from '../../weather/module'
 import { Weather } from '../../weather/domain/entity/weather'
 
