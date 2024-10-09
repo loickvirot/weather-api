@@ -1,6 +1,7 @@
-import { describe, expect, test } from '@jest/globals'
+import { describe, expect, jest, test } from '@jest/globals'
 import createServer from '../server'
 import request from 'supertest'
+import { weather } from '../../modules'
 
 const server = createServer()
 
@@ -23,5 +24,20 @@ describe('Weather controller', () => {
     const res = await request(server).get('/weather/current')
     expect(res.statusCode).toBe(400)
     expect(res.body).toEqual({})
+  })
+
+  test('/weather/current should return 500 when there is an error thrown in code', async () => {
+    const mock = jest
+      .spyOn(weather, 'getCurrentWeather')
+      .mockImplementation(async () => {
+        throw new Error('error')
+      })
+
+    const res = await request(server).get('/weather/current?location=toulouse')
+    expect(mock).toHaveBeenCalled()
+    expect(res.statusCode).toBe(500)
+    expect(res.body).toEqual({})
+
+    jest.resetAllMocks()
   })
 })

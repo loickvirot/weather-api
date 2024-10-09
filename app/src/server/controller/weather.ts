@@ -60,18 +60,23 @@ export interface WeatherDTO {
 router.get(
   '/current',
   async (req: Request, res: Response<JsonResponse<WeatherDTO>>) => {
-    const { location } = req.query
+    try {
+      const { location } = req.query
 
-    if (!location) {
-      res.status(400)
+      if (!location) {
+        res.status(400)
+        res.send()
+        return
+      }
+
+      const data = await weather.getCurrentWeather(location as string)
+
+      res.status(200)
+      res.json(createJsonResponse<WeatherDTO>(weatherToDTO(data)))
+    } catch (err) {
+      res.status(500)
       res.send()
-      return
     }
-
-    const data = await weather.getCurrentWeather(location as string)
-
-    res.status(200)
-    res.json(createJsonResponse<WeatherDTO>(weatherToDTO(data)))
   },
 )
 

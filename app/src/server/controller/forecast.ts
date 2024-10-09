@@ -59,18 +59,23 @@ interface ForecastDTO {
 router.get(
   '/forecast',
   async (req: Request, res: Response<JsonResponse<ForecastDTO>>) => {
-    const { location } = req.query
+    try {
+      const { location } = req.query
 
-    if (!location) {
-      res.status(400)
+      if (!location) {
+        res.status(400)
+        res.send()
+        return
+      }
+
+      const data = await forecast.getForecastForCity(location as string)
+
+      res.status(200)
+      res.json(createJsonResponse(forecastToDTO(data)))
+    } catch (err) {
+      res.status(500)
       res.send()
-      return
     }
-
-    const data = await forecast.getForecastForCity(location as string)
-
-    res.status(200)
-    res.json(createJsonResponse(forecastToDTO(data)))
   },
 )
 
