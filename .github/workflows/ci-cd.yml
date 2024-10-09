@@ -107,3 +107,17 @@ jobs:
           service: weather-api
           image: europe-west1-docker.pkg.dev/weather-api-437916/weather-api/weather-api:latest
           region: europe-west1
+
+  test:
+    name: Automated API tests using Postman CLI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Postman CLI
+        run: |
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+      - name: Login to Postman CLI
+        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+      - name: Run API tests
+        run: |
+          postman collection run "4680034-a31d833e-3e14-4aee-b19d-8d483ab4e476" -e "4680034-d5789bbe-e6d5-48d4-8fb6-d38db9f91e9c"
