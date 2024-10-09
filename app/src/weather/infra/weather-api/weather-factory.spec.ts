@@ -22,7 +22,7 @@ describe('Weather factory', () => {
     const weatherApiResponse: WeatherAPIResponse = {
       data: [
         {
-          weather: { description: undefined },
+          weather: undefined,
           temp: undefined,
           rh: undefined,
           wind_spd: undefined,
