@@ -11,11 +11,7 @@ export interface WeatherModuleOptions {
   mockData: boolean
 }
 
-export const weatherModule = (
-  options: WeatherModuleOptions = {
-    mockData: process.env.APP_ENV !== 'production',
-  },
-) => {
+export const weatherModule = (options: WeatherModuleOptions) => {
   const repository = options.mockData ? mockWeatherRepository : weatherbit
 
   return {

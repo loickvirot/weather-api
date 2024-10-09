@@ -8,13 +8,11 @@ jest.mock('./infra/weather-api/mock')
 jest.mock('./infra/weather-api/weatherbit')
 jest.mock('./app/query/get-weather')
 
-// jest.mock('./infra/forecast-api/mock')
-// jest.mock('./infra/forecast-api/weatherbit')
-// jest.mock('./app/get-forecast')
-
 describe('Forecast module', () => {
   test('initialize function should return ForecastModule object', () => {
-    expect(weatherModule()).toHaveProperty('getCurrentWeather')
+    expect(weatherModule({ mockData: true })).toHaveProperty(
+      'getCurrentWeather',
+    )
   })
 
   test('getCurrentWeather should use mockWeatherReposiory when options.mockData is true', async () => {

@@ -12,9 +12,7 @@ export interface ForecastModuleOptions {
 }
 
 export const forecastModule = (
-  options: ForecastModuleOptions = {
-    mockData: process.env.APP_ENV !== 'production',
-  },
+  options: ForecastModuleOptions,
 ): ForecastModule => {
   const repository = options.mockData ? forecastAPIMock : weatherbit
 

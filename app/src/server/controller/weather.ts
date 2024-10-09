@@ -1,10 +1,9 @@
 import { Request, Response, Router } from 'express'
 import { createJsonResponse, JsonResponse } from './controller-utils'
 import { Weather } from '../../weather/domain/entity/weather'
-import { weatherModule } from '../../weather/module'
+import { weather } from '../../modules'
 
 export const router = Router()
-export const weatherMod = weatherModule()
 
 /**
  * @openapi
@@ -69,7 +68,7 @@ router.get(
       return
     }
 
-    const data = await weatherMod.getCurrentWeather(location as string)
+    const data = await weather.getCurrentWeather(location as string)
 
     res.status(200)
     res.json(createJsonResponse<WeatherDTO>(weatherToDTO(data)))

@@ -10,7 +10,9 @@ jest.mock('./app/get-forecast')
 
 describe('Forecast module', () => {
   test('initialize function should return ForecastModule object', () => {
-    expect(forecastModule()).toHaveProperty('getForecastForCity')
+    expect(forecastModule({ mockData: true })).toHaveProperty(
+      'getForecastForCity',
+    )
   })
 
   test('getForecastForCity should use forecastAPIMock repository when options.mockData is true', async () => {
