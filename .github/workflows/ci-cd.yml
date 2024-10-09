@@ -104,9 +104,14 @@ jobs:
       - id: "deploy"
         uses: "google-github-actions/deploy-cloudrun@v2"
         with:
-          service: weather-api
+          service: weather-api-staging
           image: europe-west1-docker.pkg.dev/weather-api-437916/weather-api/weather-api:latest
           region: europe-west1
+          env_vars: |-
+            APP_ENV=dev
+            BASE_URL=https://weather-api-staging-951054010171.europe-west1.run.app
+          secrets: |-
+            WEATHERBIT_APIKEY=WEATHERBIT_APIKEY:latest
 
   api-tests:
     name: API tests
