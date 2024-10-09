@@ -66,6 +66,7 @@ jobs:
     needs:
       - unit-test
       - lint
+      - sonarqube
     permissions:
       contents: read
       packages: write
