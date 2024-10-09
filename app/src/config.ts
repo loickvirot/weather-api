@@ -1,4 +1,5 @@
 export interface AppConfig {
+  baseUrl: string
   mockData: boolean
   weatherbit: {
     baseUrl: string
@@ -7,6 +8,7 @@ export interface AppConfig {
 }
 
 export default {
+  baseUrl: process.env.BASE_URL,
   mockData: process.env.APP_ENV !== 'production',
   weatherbit: {
     baseUrl: 'https://api.weatherbit.io/v2.0',

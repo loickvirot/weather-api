@@ -3,6 +3,7 @@ import { router as weatherRouter } from './controller/weather'
 import { router as forecastRouter } from './controller/forecast'
 import swaggerUi from 'swagger-ui-express'
 import swaggerJSDoc from 'swagger-jsdoc'
+import config from '../config'
 
 export default function createServer(): Application {
   const app: Application = express()
@@ -20,7 +21,7 @@ export default function createServer(): Application {
       },
       servers: [
         {
-          url: 'http://localhost:3000',
+          url: config.baseUrl,
         },
       ],
     },
