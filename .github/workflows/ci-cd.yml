@@ -186,6 +186,9 @@ jobs:
           secrets: |-
             WEATHERBIT_APIKEY=WEATHERBIT_APIKEY:latest
 
+      - name: Adding summary
+        run: echo "Prod - ${{ steps.deploy.outputs.url }} " >> $GITHUB_STEP_SUMMARY
+
   api-tests-prod:
     name: API tests - Prod
     runs-on: ubuntu-latest
@@ -207,6 +210,3 @@ jobs:
       - name: Run API tests
         run: |
           postman collection run "${{ env.POSTMAN_COLLECTION_ID }}" -e "${{ env.POSTMAN_ENV_ID }}"
-
-      - name: Adding summary
-        run: echo "Prod - ${{ steps.deploy.outputs.url }} " >> $GITHUB_STEP_SUMMARY
