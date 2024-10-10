@@ -25,7 +25,7 @@ export default function createServer(): Application {
         },
       ],
     },
-    apis: [__dirname + '/controller/*.ts'],
+    apis: [__dirname + '/controller/*.ts', __dirname + '/controller/*.js'],
   })
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
