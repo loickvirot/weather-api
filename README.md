@@ -1,8 +1,9 @@
 # Weather API
 
 [![CI/CD](https://github.com/loickvirot/weather-api/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/loickvirot/weather-api/actions/workflows/ci-cd.yml)
-
-A template to create APIs with NodeJS.
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=loickvirot_weather-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=loickvirot_weather-api)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=loickvirot_weather-api&metric=coverage)](https://sonarcloud.io/summary/new_code?id=loickvirot_weather-api)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=loickvirot_weather-api&metric=bugs)](https://sonarcloud.io/summary/new_code?id=loickvirot_weather-api)
 
 ## Tools
 
