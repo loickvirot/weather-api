@@ -137,6 +137,9 @@ jobs:
           secrets: |-
             WEATHERBIT_APIKEY=WEATHERBIT_APIKEY:latest
 
+      - name: Adding summary
+        run: echo "Staging - ${{ steps.deploy.outputs.url }} " >> $GITHUB_STEP_SUMMARY
+
   api-tests-staging:
     name: API tests - Staging
     runs-on: ubuntu-latest
@@ -193,11 +196,17 @@ jobs:
       POSTMAN_ENV_ID: 4680034-db8c7400-c06d-4b4d-a50c-4c7ba85096a9
     steps:
       - uses: actions/checkout@v4
+
       - name: Install Postman CLI
         run: |
           curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+
       - name: Login to Postman CLI
         run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+
       - name: Run API tests
         run: |
           postman collection run "${{ env.POSTMAN_COLLECTION_ID }}" -e "${{ env.POSTMAN_ENV_ID }}"
+
+      - name: Adding summary
+        run: echo "Prod - ${{ steps.deploy.outputs.url }} " >> $GITHUB_STEP_SUMMARY
