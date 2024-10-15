@@ -13,6 +13,8 @@ RUN npm install && npm run build
 # ===============================================
 FROM node:22.2.0-alpine3.19
 
+ENV APP_ENV=production
+
 WORKDIR /app
 
 COPY --from=build_image /app/package.json /app
