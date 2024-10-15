@@ -5,9 +5,16 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=loickvirot_weather-api&metric=coverage)](https://sonarcloud.io/summary/new_code?id=loickvirot_weather-api)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=loickvirot_weather-api&metric=bugs)](https://sonarcloud.io/summary/new_code?id=loickvirot_weather-api)
 
-## Install
+## Features
 
-### Docker
+This API contains many endpoints to obtains weather data :
+
+- Current weather
+- 7 Day forecast evolution
+
+You can access to the API documentation with swagger: http://localhost:3000/api-docs/
+
+## Install
 
 You can use Docker to install and use application:
 

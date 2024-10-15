@@ -32,12 +32,16 @@ export interface WeatherDTO {
  *                  properties:
  *                    description:
  *                      type: string
+ *                      description: Short description of weather
  *                    temperature:
  *                      type: number
+ *                      description: Temperature in celsius
  *                    humidity:
  *                      type: integer
+ *                      description: Humidity in percent
  *                    wind_speed:
  *                      type: number
+ *                      description: Wind speed in Km/h
  *      400:
  *        description: No location
  *    parameters:

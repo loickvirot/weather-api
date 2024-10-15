@@ -32,12 +32,16 @@ interface ForecastDTO {
  *                  properties:
  *                    evolution:
  *                      type: string
+ *                      description: General weather evolution. Can be "increase", "stable" or "decrease".
  *                    temperature:
  *                      type: string
+ *                      description: Temperature evolution. General evolution. Can be "increase", "stable" or "decrease".
  *                    pressure:
  *                      type: string
+ *                      description: Pressure evolution. Can be "high_increase", "increase", "stable", "decrease" or "high_decrease".
  *                    wind_force_average:
  *                      type: integer
+ *                      description: Wind speed average using Beaufort's scale.
  *      400:
  *        description: No location
  *    parameters:
