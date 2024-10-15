@@ -5,22 +5,6 @@ import { forecast } from '../../modules'
 
 export const router = Router()
 
-/**
- * @openapi
- * components:
- *  schemas:
- *    ForecastDTO:
- *      type: object
- *      properties:
- *        evolution:
- *          type: string
- *        temperature:
- *          type: string
- *        pressure:
- *          type: string
- *        wind_force_average:
- *          type: integer
- */
 interface ForecastDTO {
   evolution: string
   temperature: string
@@ -44,7 +28,16 @@ interface ForecastDTO {
  *                status:
  *                  type: number
  *                data:
- *                  $ref: "#/components/schemas/ForecastDTO"
+ *                  type: object
+ *                  properties:
+ *                    evolution:
+ *                      type: string
+ *                    temperature:
+ *                      type: string
+ *                    pressure:
+ *                      type: string
+ *                    wind_force_average:
+ *                      type: integer
  *      400:
  *        description: No location
  *    parameters:

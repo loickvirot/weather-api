@@ -5,22 +5,6 @@ import { weather } from '../../modules'
 
 export const router = Router()
 
-/**
- * @openapi
- * components:
- *  schemas:
- *    WeatherDTO:
- *      type: object
- *      properties:
- *        description:
- *          type: string
- *        temperature:
- *          type: number
- *        humidity:
- *          type: integer
- *        wind_speed:
- *          type: number
- */
 export interface WeatherDTO {
   description: string | undefined
   temperature: number | undefined
@@ -44,8 +28,16 @@ export interface WeatherDTO {
  *                status:
  *                  type: integer
  *                data:
- *                  $ref: "#/components/schemas/WeatherDTO"
- *
+ *                  type: object
+ *                  properties:
+ *                    description:
+ *                      type: string
+ *                    temperature:
+ *                      type: number
+ *                    humidity:
+ *                      type: integer
+ *                    wind_speed:
+ *                      type: number
  *      400:
  *        description: No location
  *    parameters:
