@@ -5,6 +5,9 @@ export interface AppConfig {
     baseUrl: string
     apiKey: string
   }
+  cors: {
+    origin: string
+  }
 }
 
 export default {
@@ -13,5 +16,8 @@ export default {
   weatherbit: {
     baseUrl: 'https://api.weatherbit.io/v2.0',
     apiKey: process.env.WEATHERBIT_APIKEY ?? '',
+  },
+  cors: {
+    origin: process.env.CORS_ORIGIN ?? '',
   },
 } as AppConfig
