@@ -228,8 +228,8 @@ jobs:
         run: |
           postman collection run "${{ env.POSTMAN_COLLECTION_ID }}" -e "${{ env.POSTMAN_ENV_ID }}"
 
-  deploy-prod:
-    name: Deploy - Prod
+  deploy-prod-api:
+    name: Deploy API - Prod
     runs-on: ubuntu-latest
     needs:
       - api-tests-staging
@@ -252,17 +252,46 @@ jobs:
           env_vars: |-
             APP_ENV=production
             BASE_URL=https://weather-api-951054010171.europe-west1.run.app
+            CORS_ORIGIN=https://weather-front-951054010171.europe-west1.run.app
           secrets: |-
             WEATHERBIT_APIKEY=WEATHERBIT_APIKEY:latest
 
       - name: Adding summary
-        run: echo "Prod - ${{ steps.deploy.outputs.url }} " >> $GITHUB_STEP_SUMMARY
+        run: echo "Prod API - ${{ steps.deploy.outputs.url }} " >> $GITHUB_STEP_SUMMARY
+
+  deploy-prod-front:
+    name: Deploy front - Prod
+    runs-on: ubuntu-latest
+    needs:
+      - deploy-staging-front
+      - deploy-prod-api
+    permissions:
+      contents: "read"
+      id-token: "write"
+    steps:
+      - uses: "actions/checkout@v4"
+
+      - uses: "google-github-actions/auth@v2"
+        with:
+          credentials_json: ${{ secrets.GCP_KEY }}
+
+      - id: "deploy"
+        uses: "google-github-actions/deploy-cloudrun@v2"
+        with:
+          service: weather-front
+          image: europe-west1-docker.pkg.dev/weather-api-437916/weather-api/weather-front:latest
+          region: europe-west1
+          env_vars: |-
+            NUXT_PUBLIC_API_BASE_URL=https://weather-api-951054010171.europe-west1.run.app
+
+      - name: Adding summary
+        run: echo "Prod front - ${{ steps.deploy.outputs.url }} " >> $GITHUB_STEP_SUMMARY
 
   api-tests-prod:
     name: API tests - Prod
     runs-on: ubuntu-latest
     needs:
-      - deploy-prod
+      - deploy-prod-api
     env:
       POSTMAN_COLLECTION_ID: 4680034-a31d833e-3e14-4aee-b19d-8d483ab4e476
       POSTMAN_ENV_ID: 4680034-db8c7400-c06d-4b4d-a50c-4c7ba85096a9
