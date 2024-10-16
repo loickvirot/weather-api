@@ -149,10 +149,11 @@ jobs:
       - name: Push to registry
         run: docker push ${{ env.REGISTRY_URL }}/${{ env.IMAGE }}:latest
 
-  deploy-staging:
-    name: Deploy - Staging
+  deploy-staging-api:
+    name: Deploy API - Staging
     runs-on: ubuntu-latest
     needs:
+      - build-front
       - build-api
     permissions:
       contents: "read"
@@ -178,13 +179,41 @@ jobs:
             WEATHERBIT_APIKEY=WEATHERBIT_APIKEY:latest
 
       - name: Adding summary
-        run: echo "Staging - ${{ steps.deploy.outputs.url }} " >> $GITHUB_STEP_SUMMARY
+        run: echo "Staging API - ${{ steps.deploy.outputs.url }} " >> $GITHUB_STEP_SUMMARY
+
+  deploy-staging-front:
+    name: Deploy front - Staging
+    runs-on: ubuntu-latest
+    needs:
+      - build-front
+      - build-api
+    permissions:
+      contents: "read"
+      id-token: "write"
+    steps:
+      - uses: "actions/checkout@v4"
+
+      - uses: "google-github-actions/auth@v2"
+        with:
+          credentials_json: ${{ secrets.GCP_KEY }}
+
+      - id: "deploy"
+        uses: "google-github-actions/deploy-cloudrun@v2"
+        with:
+          service: weather-front-staging
+          image: europe-west1-docker.pkg.dev/weather-api-437916/weather-api/weather-front:latest
+          region: europe-west1
+          env_vars: |-
+            NUXT_PUBLIC_API_BASE_URL=https://weather-api-staging-951054010171.europe-west1.run.app
+
+      - name: Adding summary
+        run: echo "Staging front - ${{ steps.deploy.outputs.url }} " >> $GITHUB_STEP_SUMMARY
 
   api-tests-staging:
     name: API tests - Staging
     runs-on: ubuntu-latest
     needs:
-      - deploy-staging
+      - deploy-staging-api
     env:
       POSTMAN_COLLECTION_ID: 4680034-a31d833e-3e14-4aee-b19d-8d483ab4e476
       POSTMAN_ENV_ID: 4680034-d5789bbe-e6d5-48d4-8fb6-d38db9f91e9c
