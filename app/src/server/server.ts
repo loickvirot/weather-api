@@ -3,10 +3,17 @@ import { router as weatherRouter } from './controller/weather'
 import { router as forecastRouter } from './controller/forecast'
 import swaggerUi from 'swagger-ui-express'
 import swaggerJSDoc from 'swagger-jsdoc'
+import cors from 'cors'
 import config from '../config'
 
 export default function createServer(): Application {
   const app: Application = express()
+
+  app.use(
+    cors({
+      origin: config.cors.origin,
+    }),
+  )
 
   // Router
   app.use('/weather', weatherRouter)
