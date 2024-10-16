@@ -7,47 +7,57 @@
 
 ## Features
 
-This API contains many endpoints to obtains weather data :
+This app contains and API and a front UI page to obtain weather data:
 
 - Current weather
 - 7 Day forecast evolution
 
-You can access to the API documentation with swagger: http://localhost:3000/api-docs/
+## Environments
+
+### Local
+
+- [Front](http://localhost:3001)
+- [API Doc](http://localhost:3000/api-docs)
+
+### Staging
+
+- [Front](https://weather-front-staging-951054010171.europe-west1.run.app)
+- [API Doc](https://weather-api-staging-951054010171.europe-west1.run.app/api-docs)
+
+### Prod
+
+- [Front](https://weather-front-951054010171.europe-west1.run.app)
+- [API Doc](https://weather-api-951054010171.europe-west1.run.app/api-docs)
 
 ## Install
 
-You can use Docker to install and use application:
+You can use make command to initalize and install this app in local (You need to have docker and docker-compose installed) :
 
 ```bash
-docker run \
-  -p 3000:3000 \
-  -e BASE_URL='http://localhost:3000' \
-  -e WEATHERBIT_APIKEY='<Weatherbit API key>' \
-  europe-west1-docker.pkg.dev/weather-api-437916/weather-api/weather-api:latest
+make dotenv@init # Will ask for Weatherbit API Key
+make launch
 ```
 
 ## Develop
 
-First of all, init project with Make:
+First of all, initialize development features project with Make:
 
 ```bash
 make init
 ```
 
-You can now launch docker containers with docker compose:
+You can now launch docker containers:
 
 ```bash
-docker-compose up -d
+make launch
 ```
-
-Then, you can check the API works by going to https://localhost:3000
 
 ## Run node commands
 
 To run node commands, you need to use the app container:
 
 ```bash
-docker-compose run --rm app <my-command>
+docker-compose run --rm <container_name> <my-command>
 
 # example
 docker-compose run --rm app npm install
