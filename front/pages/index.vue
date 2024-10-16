@@ -3,8 +3,20 @@
     <form @submit="(e) => submitAction(e)">
       <InputDefaultInput placeholder="Location" v-model="location" />
     </form>
-
     <div
+      v-if="currentError || forecastError"
+      class="bg-red-100 p-4 mt-4 rounded border border-red-500 text-red-500"
+    >
+      Error while retrieving weather data.
+    </div>
+    <div
+      v-else-if="!currentWeather || !forecast"
+      class="bg-blue-100 p-4 mt-4 rounded border border-blue-500 text-blue-500"
+    >
+      Please enter a city to get weather data.
+    </div>
+    <div
+      v-else
       class="flex flex-col space-y-4 mt-4 md:grid md:grid-cols-2 md:gap-4 md:content-start md:space-y-0"
     >
       <Card class="">
@@ -58,7 +70,7 @@
 </template>
 
 <script setup lang="ts">
-const location = ref("Toulouse");
+const location = ref("");
 const config = useRuntimeConfig();
 
 interface CurrentWeatherAPIResponse {
@@ -81,37 +93,46 @@ interface ForecastAPIResponse {
   };
 }
 
-const { data: currentWeather, execute: currentExecute } =
-  useFetch<CurrentWeatherAPIResponse>(`/weather/current`, {
-    baseURL: config.public.apiBaseUrl,
-    lazy: true,
-    server: false,
-    immediate: false,
-    params: {
-      location,
-    },
-    watch: false,
-  });
+const {
+  data: currentWeather,
+  execute: currentExecute,
+  error: currentError,
+} = useFetch<CurrentWeatherAPIResponse>(`/weather/current`, {
+  baseURL: config.public.apiBaseUrl,
+  lazy: true,
+  server: false,
+  immediate: false,
+  params: {
+    location,
+  },
+  watch: false,
+});
 
-const { data: forecast, execute: forecastExecute } =
-  useFetch<ForecastAPIResponse>(`/weather/forecast`, {
-    baseURL: config.public.apiBaseUrl,
-    lazy: true,
-    server: false,
-    immediate: false,
-    params: {
-      location,
-    },
-    watch: false,
-  });
+const {
+  data: forecast,
+  execute: forecastExecute,
+  error: forecastError,
+} = useFetch<ForecastAPIResponse>(`/weather/forecast`, {
+  baseURL: config.public.apiBaseUrl,
+  lazy: true,
+  server: false,
+  immediate: false,
+  params: {
+    location,
+  },
+  watch: false,
+});
 
 const submitAction = (event: Event | undefined = undefined): void => {
   if (event) {
     event.preventDefault();
   }
+  if (!location.value) {
+    currentWeather.value = null;
+    forecast.value = null;
+    return;
+  }
   currentExecute();
   forecastExecute();
 };
-
-submitAction();
 </script>
